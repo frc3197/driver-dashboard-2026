@@ -44,7 +44,7 @@ function App() {
     if (enabled && alert == 'Disable') {
       setAlert('None');
     }
-    if (!enabled) {
+    if (!enabled && alert != 'Disconnect') {
       setAlert('Disable');
     }
   }, [enabled]);
