@@ -73,7 +73,7 @@ button {
 }
 
 @theme {
-  --animate-fade-in-scale: fade-in-scale 0.3s ease-out;
+  --animate-fade-in-scale: fade-in-scale 0.67s ease-out;
 
   @keyframes fade-in-scale {
     0% {

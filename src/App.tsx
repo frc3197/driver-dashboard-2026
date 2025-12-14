@@ -8,10 +8,11 @@ import HomeTab from './tabs/Home';
 import ConnectionIndicator from './ConnectionIndicator';
 import { enabledEntry, matchTimeEntry } from './entries';
 import TeleTab from './tabs/Tele';
+import AutoTab from './tabs/Auto';
 
 function App() {
 
-  const [tab, setTab] = useState<Tab>('Home');
+  const [tab, setTab] = useState<Tab>('Auto');
 
   const [alert, setAlert] = useState<Alert>('Disconnect');
 
@@ -84,6 +85,9 @@ function App() {
           }
           {tab == 'General' &&
             <GeneralTab />
+          }
+          {tab == 'Auto' &&
+            <AutoTab />
           }
           {tab == 'Tele' &&
             <TeleTab setAlert={setAlert} alert={alert} />

@@ -1,5 +1,5 @@
 import { useEntry, useNt4 } from '@frc-web-components/react';
-import { matchTimeEntry } from '../entries';
+import { matchTimeEntry, networkAlertEntry } from '../entries';
 import type { Alert } from '../types';
 import { useEffect, useRef } from 'react';
 
@@ -19,6 +19,8 @@ function getCountdownColor(time: number) {
 const TeleTab = ({ setAlert, alert }: { setAlert: (a: Alert) => void, alert: Alert }) => {
 
     const [timeRemaining] = useEntry(matchTimeEntry, 0.0);
+    const [networkAlertList] = useEntry(networkAlertEntry, {});
+
     const isEndgameRef = useRef(false);
 
     useEffect(() => {
@@ -34,8 +36,27 @@ const TeleTab = ({ setAlert, alert }: { setAlert: (a: Alert) => void, alert: Ale
     }, [timeRemaining, isEndgameRef]);
 
     return (
-        <div className="w-full h-full bg-transparent p-5 pt-10 flex flex-col items-center gap-10">
+        <div className="w-full h-full p-5 pt-10 flex flex-col overflow-hidden items-center gap-10">
             <h1 className={`text-9xl select-none text-left w-65 scale-150 ${timeRemaining == -1 ? 'animate-pulse' : ''} ${getCountdownColor(timeRemaining)}`}>{timeRemaining == -1 ? '00.0' : timeRemaining.toFixed(1)}</h1>
+            <div className='mt-10 grid-cols-3 grid gap-5 flex-1 flex-1 overflow-y-auto pb-5 overflow-x-hidden'>
+                <div className='border-3 rounded-xl border-gray-700 min-h-25 px-5 py-3 overflow-y-auto shadow-lg/33'>
+                    {
+                        networkAlertList.errors?.map((e:string, i:number) => {
+                            return (<p className='text-2xl break-words font-bold text-red-500' key={i}>{e}</p>);
+                        })
+                    }
+                    {
+                        networkAlertList.warnings?.map((e:string, i:number) => {
+                            return (<p className='text-xl break-words font-bold text-yellow-600' key={i}>{e}</p>);
+                        })
+                    }
+                    {
+                        networkAlertList.infos?.map((e:string, i:number) => {
+                            return (<p className='text-xl break-words font-bold text-gray-800' key={i}>{e}</p>);
+                        })
+                    }
+                </div>
+            </div>
         </div>
     )
 }
